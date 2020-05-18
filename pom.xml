@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.anteros</groupId>
 	<artifactId>Anteros-XML-Helper</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 
 	<name>Anteros XML Helper</name>
 	<description>
@@ -43,14 +43,33 @@
 	</developers>
 
 	<properties>
-		<java.versao>1.6</java.versao>
+		<java.versao>1.8</java.versao>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<bintray.subject>edson</bintray.subject>
 		<bintray.repo>maven</bintray.repo>
 		<bintray.package>anteros-xml-helper</bintray.package>
-		<maven.compiler.source>1.6</maven.compiler.source>
-		<maven.compiler.target>1.6</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
+
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>bintray-puravida-software-repo</id>
+			<name>bintray</name>
+			<url>https://dl.bintray.com/puravida-software/repo</url>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>spring</id>
+			<name>extensions</name>
+			<url>https://repo.spring.io/release</url>
+		</repository>
+	</repositories>
 
 	<profiles>
 		<profile>
@@ -129,7 +148,7 @@
 								</execution>
 							</executions>
 							<configuration>
-								<additionalparam>-Xdoclint:none</additionalparam>
+								<doclint>none</doclint>
 							</configuration>
 						</plugin>
 					</plugins>
@@ -155,11 +174,16 @@
 						<enabled>false</enabled>
 					</snapshots>
 				</repository>
+				<repository>
+					<id>spring-repo</id>
+					<name>Spring Repository</name>
+					<url>https://repo.spring.io/release</url>
+				</repository>
 			</repositories>
 		</profile>
 		<profile>
 			<id>bintray</id>
-			<build>				
+			<build>
 				<pluginManagement>
 					<plugins>
 						<plugin>
@@ -196,7 +220,7 @@
 								</execution>
 							</executions>
 							<configuration>
-								<additionalparam>-Xdoclint:none</additionalparam>
+								<doclint>none</doclint>
 							</configuration>
 						</plugin>
 					</plugins>
@@ -221,7 +245,64 @@
 						<enabled>false</enabled>
 					</snapshots>
 				</repository>
+				<repository>
+					<id>spring-repo</id>
+					<name>Spring Repository</name>
+					<url>https://repo.spring.io/release</url>
+				</repository>
 			</repositories>
+		</profile>
+		<profile>
+			<id>local</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-compiler-plugin</artifactId>
+							<version>3.1</version>
+							<configuration>
+								<target>${java.versao}</target>
+								<source>${java.versao}</source>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-source-plugin</artifactId>
+							<executions>
+								<execution>
+									<id>attach-sources</id>
+									<goals>
+										<goal>jar</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<executions>
+								<execution>
+									<id>attach-javadocs</id>
+									<goals>
+										<goal>jar</goal>
+									</goals>
+
+								</execution>
+							</executions>
+							<configuration>
+								<doclint>none</doclint>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+			<distributionManagement>
+				<repository>
+					<id>local-REPO</id>
+					<url>http://vps4657.publiccloud.com.br:8082/artifactory/libs-release-local</url>
+				</repository>
+			</distributionManagement>
 		</profile>
 	</profiles>
 </project>
